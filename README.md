@@ -10,6 +10,43 @@
 
 Visualize your node_modules, inspect dependencies, and more.
 
+### NPM Fork
+
+This fork allow you to use node-modules-inspector with NPM (may be working with yarn too).
+
+> [!important] Currently the CLI is blocked at the step "Fetching publish dates.." working on fixing it!
+
+#### 1. Install the dependencies
+
+```bash
+npm i
+```
+
+#### Build the projects
+
+```bash
+npm run build
+```
+
+#### Link the CLI
+
+```bash
+cd packages/node-modules-inspector
+npm link
+```
+
+#### Use the link in another repository
+
+```bash
+npm link node-modules-inspector
+```
+
+#### Run the linked CLI
+
+```bash
+node-modules-inspector
+```
+
 ### Quick Start
 
 Try it by running following command under your `npm` project.
