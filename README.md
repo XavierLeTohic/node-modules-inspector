@@ -14,7 +14,8 @@ Visualize your node_modules, inspect dependencies, and more.
 
 This fork allow you to use node-modules-inspector with NPM (may be working with yarn too).
 
-> [!important] Currently the CLI is blocked at the step "Fetching publish dates.." working on fixing it!
+> [!IMPORTANT]
+> 🚧 The CLI is blocked at the step "Fetching publish dates.." working on fixing it!
 
 #### 1. Install the dependencies
 
