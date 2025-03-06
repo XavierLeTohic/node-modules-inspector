@@ -12,13 +12,13 @@ Visualize your node_modules, inspect dependencies, and more.
 
 ### Quick Start
 
-Try it by running following command under your `pnpm` project.
+Try it by running following command under your `npm` project.
 
 ```bash
-pnpx node-modules-inspector
+npx node-modules-inspector
 ```
 
-> Currently only support `pnpm` projects. We are counting on the community to bring support for other package managers.
+> Currently only support `npm` projects. We are counting on the community to bring support for other package managers.
 
 ### Online Version
 
@@ -53,7 +53,7 @@ export default defineConfig({
 You can also build a static SPA of your current node_modules status:
 
 ```bash
-pnpx node-modules-inspector build
+npx node-modules-inspector build
 ```
 
 Then you can host the `.node-modules-inspector` folder with any static file server.

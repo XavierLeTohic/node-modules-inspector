@@ -69,9 +69,9 @@ export async function install(
   await wc.fs.writeFile(join(ROOT, '__server.mjs'), CODE_SERVER)
 
   await exec('node', ['--version'])
-  await exec('pnpm', ['--version'])
+  await exec('npm', ['--version'])
 
-  await exec('pnpm', ['install', ...args])
+  await exec('npm', ['install', ...args])
 
   let result: NodeModulesInspectorPayload | undefined
   const _process = exec('node', ['__server.mjs'], false, (chunk) => {

@@ -33,19 +33,18 @@
     "test": "vitest"
   },
   "dependencies": {
-    "p-limit": "catalog:",
-    "package-manager-detector": "catalog:",
-    "pathe": "catalog:",
-    "publint": "catalog:",
-    "semver": "catalog:",
-    "tinyexec": "catalog:"
+    "p-limit": "latest",
+    "package-manager-detector": "latest",
+    "pathe": "latest",
+    "publint": "latest",
+    "semver": "latest",
+    "tinyexec": "latest"
   },
   "devDependencies": {
-    "@pnpm/list": "catalog:",
-    "@pnpm/types": "catalog:",
-    "@types/stream-json": "catalog:",
-    "pkg-types": "catalog:",
-    "stream-json": "catalog:",
-    "unbuild": "catalog:"
+    "@npm/types": "latest",
+    "@types/stream-json": "latest",
+    "pkg-types": "latest",
+    "stream-json": "latest",
+    "unbuild": "latest"
   }
 }

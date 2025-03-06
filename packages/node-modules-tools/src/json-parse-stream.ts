@@ -34,9 +34,9 @@ export function parseJsonStreamWithConcatArrays<T>(
       // @ts-expect-error casting
       assembler[chunk.name]?.(chunk.value)
       if (assembler.done) {
-        if (!Array.isArray(assembler.current))
+        if (!Array.isArray(Object.values(assembler.current)))
           throw new Error(`Expected an array but got: ${String(assembler.current)}`)
-        values.push(...assembler.current)
+        values.push(...Object.values(assembler.current) as T[])
       }
     })
     stream.pipe(parser)

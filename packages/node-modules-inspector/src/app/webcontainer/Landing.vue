@@ -49,7 +49,7 @@ async function run() {
           focus-within="shadow-xl ring-4 ring-primary:10"
         >
           <div flex-none font-mono select-none flex="~ gap-2 items-center">
-            <span text-orange>pnpm</span> <span op50>install</span>
+            <span text-orange>npm</span> <span op50>install</span>
           </div>
           <input
             v-model="input"
@@ -61,12 +61,12 @@ async function run() {
           >
         </label>
         <div text-center transition duration-500 italic :class="input ? 'op35' : 'op0'">
-          This will run a pnpm install inside your browser with <a href="https://webcontainers.io/" target="_blank" hover:underline>WebContainer</a>.
+          This will run a npm install inside your browser with <a href="https://webcontainers.io/" target="_blank" hover:underline>WebContainer</a>.
         </div>
 
         <div p2 mt3 text-center flex="~ col gap-2">
           <div>
-            <span op35>Or run in your local project with</span> <a href="https://github.com/antfu/node-modules-inspector" target="_blank"><code badge-color-gray important-bg-gray:3 font-mono px2 py1 rounded>pnpx <span text-primary:90>node-modules-inspector</span></code></a>
+            <span op35>Or run in your local project with</span> <a href="https://github.com/antfu/node-modules-inspector" target="_blank"><code badge-color-gray important-bg-gray:3 font-mono px2 py1 rounded>npx <span text-primary:90>node-modules-inspector</span></code></a>
           </div>
           <div>
             <span op35>Or see a static build demo at </span><a href="https://everything.antfu.dev" target="_blank" op50 hover="op100 underline text-primary">everything.antfu.dev</a>

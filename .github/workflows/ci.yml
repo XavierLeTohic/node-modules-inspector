@@ -15,8 +15,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+      - name: Install npm
+        uses: npm/action-setup@v4
 
       - name: Set node
         uses: actions/setup-node@v4
@@ -47,8 +47,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+      - name: Install npm
+        uses: npm/action-setup@v4
 
       - name: Set node ${{ matrix.node }}
         uses: actions/setup-node@v4

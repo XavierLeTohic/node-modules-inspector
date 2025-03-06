@@ -55,7 +55,7 @@ const timepassed = computed(() => rawPayload.value?.timestamp ? Date.now() - raw
         <span font-mono break-after-all text-left leading-none>{{ rawPayload.config?.name ?? rawPayload.root }}</span>
       </button>
       <div flex="~ gap-2 items-center">
-        <div i-catppuccin-pnpm icon-catppuccin flex-none />
+        <div i-catppuccin-npm icon-catppuccin flex-none />
         <span>{{ rawPayload.packageManager }}</span>
         <DisplayVersion :version="rawPayload.packageManagerVersion" prefix="@" op75 />
       </div>

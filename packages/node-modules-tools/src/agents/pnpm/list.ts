@@ -1,33 +1,33 @@
-import type { PackageDependencyHierarchy } from '@pnpm/list'
-import type { ProjectManifest } from '@pnpm/types'
+import type { ProjectManifest } from '@npm/types'
 import type { ListPackageDependenciesOptions, ListPackageDependenciesRawResult, PackageNodeRaw } from '../../types'
+import type { PackageDependencyHierarchy } from '../../types/npm'
 import { dirname, relative } from 'pathe'
 import { x } from 'tinyexec'
 
-type PnpmPackageNode = Pick<ProjectManifest, 'description' | 'license' | 'author' | 'homepage'> & {
+type npmPackageNode = Pick<ProjectManifest, 'description' | 'license' | 'author' | 'homepage'> & {
   alias: string | undefined
   version: string
   path: string
   resolved?: string
   from: string
   repository?: string
-  dependencies?: Record<string, PnpmPackageNode>
+  dependencies?: Record<string, npmPackageNode>
 }
 
-type PnpmDependencyHierarchy = Pick<PackageDependencyHierarchy, 'name' | 'version' | 'path'> &
+type npmDependencyHierarchy = Pick<PackageDependencyHierarchy, 'name' | 'version' | 'path'> &
   Required<Pick<PackageDependencyHierarchy, 'private'>> &
   {
-    dependencies?: Record<string, PnpmPackageNode>
-    devDependencies?: Record<string, PnpmPackageNode>
-    optionalDependencies?: Record<string, PnpmPackageNode>
-    unsavedDependencies?: Record<string, PnpmPackageNode>
+    dependencies?: Record<string, npmPackageNode>
+    devDependencies?: Record<string, npmPackageNode>
+    optionalDependencies?: Record<string, npmPackageNode>
+    unsavedDependencies?: Record<string, npmPackageNode>
   }
 
 async function resolveRoot(options: ListPackageDependenciesOptions) {
   let raw: string | undefined
   if (options.workspace === false) {
     try {
-      raw = (await x('pnpm', ['root'], { throwOnError: true, nodeOptions: { cwd: options.cwd } }))
+      raw = (await x('npm', ['root'], { throwOnError: true, nodeOptions: { cwd: options.cwd } }))
         .stdout
         .trim()
     }
@@ -38,13 +38,13 @@ async function resolveRoot(options: ListPackageDependenciesOptions) {
   }
   else {
     try {
-      raw = (await x('pnpm', ['root', '-w'], { throwOnError: true, nodeOptions: { cwd: options.cwd } }))
+      raw = (await x('npm', ['root', '-w'], { throwOnError: true, nodeOptions: { cwd: options.cwd } }))
         .stdout
         .trim()
     }
     catch {
       try {
-        raw = (await x('pnpm', ['root'], { throwOnError: true, nodeOptions: { cwd: options.cwd } }))
+        raw = (await x('npm', ['root'], { throwOnError: true, nodeOptions: { cwd: options.cwd } }))
           .stdout
           .trim()
       }
@@ -57,25 +57,25 @@ async function resolveRoot(options: ListPackageDependenciesOptions) {
   return raw ? dirname(raw) : options.cwd
 }
 
-async function getPnpmVersion(options: ListPackageDependenciesOptions) {
+async function getnpmVersion(options: ListPackageDependenciesOptions) {
   try {
-    const raw = await x('pnpm', ['--version'], { throwOnError: true, nodeOptions: { cwd: options.cwd } })
+    const raw = await x('npm', ['--version'], { throwOnError: true, nodeOptions: { cwd: options.cwd } })
     return raw.stdout.trim()
   }
   catch (err) {
-    console.error('Failed to get pnpm version')
+    console.error('Failed to get npm version')
     console.error(err)
     return undefined
   }
 }
 
-async function getDependenciesTree(options: ListPackageDependenciesOptions): Promise<PnpmDependencyHierarchy[]> {
+async function getDependenciesTree(options: ListPackageDependenciesOptions): Promise<npmDependencyHierarchy[]> {
   const args = ['ls', '--json', '--no-optional', '--depth', String(options.depth)]
   if (options.monorepo)
     args.push('--recursive')
   if (options.workspace === false)
     args.push('--ignore-workspace')
-  const process = x('pnpm', args, {
+  const process = x('npm', args, {
     throwOnError: true,
     nodeOptions: {
       stdio: 'pipe',
@@ -84,10 +84,10 @@ async function getDependenciesTree(options: ListPackageDependenciesOptions): Pro
   })
 
   const json = await import('../../json-parse-stream')
-    .then(r => r.parseJsonStreamWithConcatArrays<PnpmDependencyHierarchy>(process.process!.stdout!))
+    .then(r => r.parseJsonStreamWithConcatArrays<npmDependencyHierarchy>(process.process!.stdout!))
 
   if (!Array.isArray(json))
-    throw new Error(`Failed to parse \`pnpm ls\` output, expected an array but got: ${String(json)}`)
+    throw new Error(`Failed to parse \`npm ls\` output, expected an array but got: ${String(json)}`)
 
   return json
 }
@@ -126,8 +126,8 @@ export async function listPackageDependencies(
     }
   })
 
-  const mapNormalize = new WeakMap<PnpmPackageNode, PackageNodeRaw>()
-  function normalize(raw: PnpmPackageNode): PackageNodeRaw {
+  const mapNormalize = new WeakMap<npmPackageNode, PackageNodeRaw>()
+  function normalize(raw: npmPackageNode): PackageNodeRaw {
     let node = mapNormalize.get(raw)
     if (node)
       return node
@@ -154,7 +154,7 @@ export async function listPackageDependencies(
   }
 
   function traverse(
-    raw: PnpmPackageNode,
+    raw: npmPackageNode,
     level: number,
     mode: 'dev' | 'prod' | 'optional',
   ): PackageNodeRaw {
@@ -202,8 +202,8 @@ export async function listPackageDependencies(
 
   return {
     root,
-    packageManager: 'pnpm',
-    packageManagerVersion: await getPnpmVersion(options),
+    packageManager: 'npm',
+    packageManagerVersion: await getnpmVersion(options),
     packages,
   }
 }
